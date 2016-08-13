@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Image.destroy_all
+10.times do |index|
+	Image.create! [{name:"img_#{index}", url: "img#{index}"}]
+end
+
+img=Image.find_by name: "img_0"
+img.candidates.create! [
+{content: "功"},
+{content: "切"}
+
+]
