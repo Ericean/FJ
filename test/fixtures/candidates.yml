@@ -2,8 +2,10 @@
 
 one:
   content: MyString
+  votes: 1
   image_id: 
 
 two:
   content: MyString
+  votes: 1
   image_id: 

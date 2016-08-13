@@ -2,7 +2,7 @@ Rails.application.routes.draw do
  root  to: "images#index"
 
  resources :images do
-   resources :candidates, only: [:create, :destroy]
+   resources :candidates, only: [:create, :destroy, :update]
  end
  
  resources :sessions, only: [:new, :create, :destroy]

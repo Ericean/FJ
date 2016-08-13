@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160813062936) do
+ActiveRecord::Schema.define(version: 20160813102112) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name"
@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(version: 20160813062936) do
 
   create_table "candidates", force: :cascade do |t|
     t.string   "content"
+    t.integer  "votes",      default: 0
     t.integer  "image_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "candidates", ["image_id"], name: "index_candidates_on_image_id"
