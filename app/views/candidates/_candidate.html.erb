@@ -1,5 +1,6 @@
 <div class="candidate">
 	<div>
 		<%= content_tag :span , "#{candidate.content}", class:  "content-style" %>
+		<%= link_to "delete candidate", [@image, candidate], method: :delete %>
 	</div>
 </div>

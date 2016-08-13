@@ -5,9 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Admin.destroy_all
 Image.destroy_all
-10.times do |index|
-	Image.create! [{name:"img_#{index}", url: "img#{index}"}]
+Candidate.destroy_all
+
+
+Admin.create! [
+{name: "Ze Gao", password: "abc123"}
+]
+admin= Admin.find_by name: "Ze Gao"
+
+30.times do |index|
+	admin.images.create! [{name:"img_#{index}", url: "img#{index}"}]
 end
 
 img=Image.find_by name: "img_0"
