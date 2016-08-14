@@ -16,10 +16,10 @@ Admin.create! [
 admin= Admin.find_by name: "Ze Gao"
 
 30.times do |index|
-	admin.images.create! [{name:"img_#{index}", url: "img#{index}"}]
+	admin.images.create! [url: "img#{index}"]
 end
 
-img=Image.find_by name: "img_0"
+img=Image.find_by url: "img0"
 img.candidates.create! [
 {content: "功"},
 {content: "切"}

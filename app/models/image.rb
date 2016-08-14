@@ -11,5 +11,8 @@ class Image < ActiveRecord::Base
   end
 
 # check if the image owner has voted for this image
+  def modified?
+  	self.modified
+  end
   
 end

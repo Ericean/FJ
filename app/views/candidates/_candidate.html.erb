@@ -1,8 +1,8 @@
 	<li>
 		<div class="candidate">
 		<%= candidate.content %> &nbsp
-		<%= link_to "delete", [@image, candidate], method: :delete %> |
-		<%= link_to image_tag("vote.svg.png", :border => 0), [@image, candidate], method: :put %> |
+		<%= link_to "delete", [@image, candidate], method: :delete, data: { confirm: 'Are you sure?' }	 %> |
+		<%= link_to image_tag("vote.svg.png", :border => 0), [@image, candidate], method: :put%> |
 		<%= candidate.votes %>
 		</div>
 	</li>
