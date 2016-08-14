@@ -3,7 +3,7 @@
 		<%= candidate.content %> &nbsp
 		<%= link_to "delete", [@image, candidate], method: :delete, data: { confirm: 'Are you sure?' }	 %> |
 		<%= link_to image_tag("vote.svg.png", :border => 0), [@image, candidate], method: :put%> |
-		<%= candidate.votes %>
+		<%= candidate.votesum %>
 		</div>
 	</li>
 

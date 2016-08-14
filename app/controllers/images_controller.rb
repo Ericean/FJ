@@ -1,22 +1,20 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
-
   # GET /images
   # GET /images.json
   def index
-    @images = current_user.images.paginate(page:params[:page], per_page: 10)
+    @images = Image.all.paginate(page:params[:page], per_page: 10)
   end
 
   # GET /images/1
   # GET /images/1.json
   def show
-      
   end
 
   # GET /images/new
   def new
-    @image = current_user.images.new
+    @image = Image.new
   end
 
   # GET /images/1/edit
@@ -26,7 +24,7 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = current_user.images.new(image_params)
+    @image = Image.new(image_params)
 
     respond_to do |format|
       if @image.save
@@ -39,7 +37,6 @@ class ImagesController < ApplicationController
     end
   end
 
-    
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
@@ -64,17 +61,16 @@ class ImagesController < ApplicationController
     end
   end
 
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_image
-      @image = current_user.images.find(params[:id])
+      @image = Image.find(params[:id])
       @prev = @image.previous
       @next = @image.next
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:url,:modified)
+      params.require(:image).permit(:url)
     end
 end

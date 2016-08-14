@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Url</th>
-      <th>Voted?</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,18 +12,15 @@
     <% @images.each do |image| %>
       <tr>
         <td><%= image.url %></td>
-        <td><%= image.modified%></td>
         <td><%= link_to 'Show', image %></td>
         <td><%= link_to 'Edit', edit_image_path(image) %></td>
         <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-<%= will_paginate @images %>
-<br />
-<!-- later use for uploading new image file-->
+<%= will_paginate @images%>
+
 <%= link_to 'New Image', new_image_path %>

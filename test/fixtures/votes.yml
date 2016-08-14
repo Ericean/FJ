@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  content: MyString
-  votesum: 1
+  voted: false
+  admin_id: 
   image_id: 
 
 two:
-  content: MyString
-  votesum: 1
+  voted: false
+  admin_id: 
   image_id: 

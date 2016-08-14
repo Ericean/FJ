@@ -1,16 +1,16 @@
 class CandidatesController < ApplicationController
-before_action :set_image, only: [:create,:destroy,:update]
+before_action :set_image,:set_vote, only: [:create,:destroy,:update]
 
 def create 
 	@candidate= @image.candidates.new(candidate_params)
-	if @image.modified?
+	if @vote.voted?
 		redirect_to @image, alert: "You've voted! Add new candidate is not allowed"
 	elsif  @candidate.content.empty?
 		redirect_to @image, alert: "Empty content is not allowed!"
 	else
-		@candidate.votes+=1
-		@image.modified=true
-		if @candidate.save && @image.save
+		@candidate.votesum+=1
+		@vote.voted=true
+		if @candidate.save && @vote.save
 		redirect_to @image, notice: "Candidates successfully added!"
 		else 
 		redirect_to @image, alert: "Unable to add new candidate!"
@@ -26,13 +26,13 @@ end
 
 
 def update
-	if @image.modified?
+	if  @vote.voted?
 		redirect_to @image, alert: "You've voted!"
 	else
 		@candidate=@image.candidates.find(params[:id])
-		@candidate.votes+=1
-		@image.modified=true
-		if @candidate.save && @image.save
+		@candidate.votesum+=1
+		@vote.voted=true
+		if @candidate.save && @vote.save
 			redirect_to @image, notice: "Votes updated!"
 	    else
 	    	redirect_to @image, alert: "Vote Failed!" 
@@ -41,12 +41,17 @@ def update
 end
 
 private
+	
 	def set_image
 		@image= Image.find(params[:image_id])
 	end
 
+	def set_vote
+		@vote = current_user.votes.find_by(image:@image)
+	end
+
 	def candidate_params 
-		params.require(:candidate).permit(:content, :votes)
+		params.require(:candidate).permit(:content, :votesum)
 	end
 
 end

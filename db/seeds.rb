@@ -11,12 +11,20 @@ Candidate.destroy_all
 
 
 Admin.create! [
-{name: "Ze Gao", password: "abc123"}
+{name: "Ze Gao", password: "abc123"},
+{name: "Tina", password:"123abc"}
 ]
-admin= Admin.find_by name: "Ze Gao"
+
+ze= Admin.find_by(name:"Ze Gao")
+tina= Admin.find_by(name:"Tina")
 
 30.times do |index|
-	admin.images.create! [url: "img#{index}"]
+	img =Image.new(url: "img#{index}")
+	img.save!
+	vote =ze.votes.new(admin:ze, image:img)
+	vote.save!
+	vote =tina.votes.new(admin:tina, image:img)
+	vote.save!
 end
 
 img=Image.find_by url: "img0"
@@ -25,3 +33,4 @@ img.candidates.create! [
 {content: "切"}
 
 ]
+
