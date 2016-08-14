@@ -20,9 +20,9 @@
 
 .book-title { font: bold 15px arial, sans-serif; }
 .note-title { font: bold 12px arial, sans-serif; }
-.candidate { padding-bottom: 10px; }
+.candidate { padding-bottom: 10px; font-size: 5em; }
 
-.content_style {
+.candidate.content {
 	background: lightgray;
 	margin: 15px;
     padding: 5px;

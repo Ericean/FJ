@@ -3,7 +3,9 @@ before_action :set_image, only: [:create,:destroy,:update]
 
 def create 
 	@candidate= @image.candidates.new(candidate_params)
-	if  @candidate.save 
+	if  @candidate.content.empty?
+		redirect_to @image, alert: "Empty content is not allowed!"
+	elsif @candidate.save 
 		redirect_to @image, notice: "Candidates successfully added!"
 	else 
 		redirect_to @image, alert: "Unable to add new candidate!"

@@ -9,4 +9,7 @@ class Image < ActiveRecord::Base
   def next
       Image.where(" id > ?",  self.id).first
   end
+
+# check if the image owner has voted for this image
+  
 end
