@@ -15,6 +15,10 @@ class Image < ActiveRecord::Base
     # 	#
     # end
 
+    def decided?
+      self.flag
+    end
+
     def result 
        self.candidates.order("candidates.votesum DESC").first.content
     end
