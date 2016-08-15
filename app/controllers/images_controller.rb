@@ -4,9 +4,12 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all.paginate(page:params[:page], per_page: 10)
+    @images = Image.where("flag = ?", false).paginate(page:params[:page], per_page: 10)
   end
 
+  def result
+    @results = Image.where("flag = ?", true).paginate(page:params[:page], per_page: 10)
+  end 
   # GET /images/1
   # GET /images/1.json
   def show
@@ -71,6 +74,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:url)
+      params.require(:image).permit(:url, :flag)
     end
 end

@@ -18,7 +18,7 @@ Admin.create! [
 ze= Admin.find_by(name:"Ze Gao")
 tina= Admin.find_by(name:"Tina")
 
-30.times do |index|
+5.times do |index|
 	img =Image.new(url: "img#{index}")
 	img.save!
 	vote =ze.votes.new(admin:ze, image:img)
@@ -28,9 +28,17 @@ tina= Admin.find_by(name:"Tina")
 end
 
 img=Image.find_by url: "img0"
-img.candidates.create! [
-{content: "功"},
-{content: "切"}
+img.flag=true
+img.save!
 
+img.candidates.create! [
+{content: "藏"},
+{content: "臧"},
+{content: "臟"}
 ]
 
+img1= Image.find_by url: "img1"
+img1.candidates.create! [
+{content: "宗"},
+{content: "崇"},
+]

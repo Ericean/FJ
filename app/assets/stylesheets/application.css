@@ -20,7 +20,7 @@
 
 .book-title { font: bold 15px arial, sans-serif; }
 .note-title { font: bold 12px arial, sans-serif; }
-.candidate { padding-bottom: 10px; font-size: 5em; }
+.candidate { padding-bottom: 10px; font-size: 3em; }
 
 .candidate.content {
 	background: lightgray;
