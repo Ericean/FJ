@@ -1,29 +1,84 @@
-<p>
-    <%= image_tag(@image.url, :border => 0) %>
-</p>
+<div class="row">
+  <div class="col-md-6" style="text-align: center">
+    <div id="tabContent" class="tab-content" style="width: 100%">
+      <div class="tab-pane fade in active" id="pic">
+        <%= image_tag(@image.url, :border => 0, :class => 'img-responsive img-thumbnail', :width => 500) %>
+      </div>
+      <div class="tab-pane fade" id="context">
+        <!--TODO:align-center-->
+        <% for i in 0...3 %>
+            <ul class="list-unstyled">
+              <% for j in 0...5 %>
+                  <li<%= i==1&&j==3 ? ' class=current' : '' %>><%= image_tag('img'+j.to_s+'.jpg') %></li>
+              <% end %>
+            </ul>
+        <% end %>
+      </div>
+      &nbsp;
+      <div class="clearfix"></div>
+    </div>
 
+    <ul id="tab" class="list-unstyled list-inline">
+      <!--TODO:styles-->
+      <li class="active">
+        <a href="#pic" data-toggle="tab">显示单字</a>
+      </li>
+      <li>
+        <a href="#context" data-toggle="tab">显示上下文</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <form action="<%= image_candidates_url @image.id %>" method="put">
+      <div class="row" id="opt-list">
+        <%= render @image.candidates %>
 
-<ul>
-<%= render @image.candidates %>
-</ul>
-
-
-<br />	
+      </div>
+      <div class="not-opt">
+        <input type="hidden" name="id">
+        <input type="text" value="其他" size="9" onclick="this.value=='其他'&&(this.value='')" class="input-lg">
+        <%= link_to "提交", "javascript:void(0)", method: :put, :id => 'submit', :class => 'btn btn-lg btn-default' %>
+        <input type="button" value="跳过" class="btn btn-lg btn-default"
+               onclick="window.location='<%=image_url rand(Image.count)+1%>'">
+      </div>
+      <p class="help-block">点击你认为正确的字或输入其他字</p>
+    </form>
+  </div>
+</div>
+<hr>
+<!--TODO:merge add-candidate submit-->
 <div>
-	<%= form_for [@image, @image.candidates.new] do |f|%>
-	<div class="field">
-		<%= f.label :content %>
-		<%= f.text_field :content %>
-	</div>
-	<div class="actions">
-		<%= f.submit "Add New Candidate"%>
-	</div>	
-	<%end%>
+  <%= form_for [@image, @image.candidates.new] do |f| %>
+      <div class="field">
+        <%= f.label :content %>
+        <%= f.text_field :content %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Add New Candidate" %>
+      </div>
+
+  <% end %>
 </div>
 
-<br />	
+<br />
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %> |
 
 <%= link_to_unless @prev.blank?, 'Prev', @prev %> |
 <%= link_to_unless @next.blank?, 'Next', @next %>
+
+<script>
+  $(document).ready(function () {
+    $("#nav-2").addClass("active");
+    $("#opt-list .opt div").click(function () {
+      if ($(this).hasClass("selected")) {
+        $("#opt-list .opt div").removeClass("selected");
+        $("#submit").href("javascript:void(0)")
+      } else {
+        $("#opt-list .opt div").removeClass("selected");
+        $(this).addClass("selected");
+        $("#submit").attr("href", "<%=image_candidates_url @image.id%>/" + $(this).attr("candidate-id"))
+      }
+    })
+  })
+</script>

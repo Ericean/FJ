@@ -1,9 +1,10 @@
-	<li>
-		<div class="candidate">
-		<%= candidate.content %> &nbsp
-		<%= link_to "delete", [@image, candidate], method: :delete, data: { confirm: 'Are you sure?' }	 %> |
-		<%= link_to image_tag("vote.svg.png", :border => 0), [@image, candidate], method: :put%> |
-		<%= candidate.votesum %>
-		</div>
-	</li>
-
+  <div class="col-xs-4 col-md-3 opt">
+    <div candidate-id="<%= candidate.id %>">
+      <div style="right: 0;top:0;font-size: 15px; z-index: 1; position: absolute; width: 60px">
+        <!--TODO:styles and auth-->
+        <%= link_to "Delete", [@image, candidate], method: :delete, data: { confirm: 'Are you sure?' }	 %>
+        Sum:<%= candidate.votesum %>
+      </div>
+      <%= candidate.content %>
+    </div>
+  </div>

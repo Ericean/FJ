@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
 .content{
 	position: relative;
 	align:center;
@@ -37,3 +38,51 @@ h1{
 #alert   { color: red; }
 .field   { margin: 5px; }
 .actions { margin: 10px 0px; }
+
+.selected {
+  outline: #ED0036 2px solid;
+  *border: #ED0036 2px solid;
+  *margin: -2px;
+  background: url(<%=asset_path 'check.gif'%>) no-repeat bottom right;
+}
+
+.current {
+  outline: #ED0036 2px solid;
+  *border: #ED0036 2px solid;
+  *margin: -2px;
+}
+
+#opt-list .opt {
+  cursor: pointer;
+  font-size: 7em;
+  text-align: center;
+  font-family: 楷体;
+}
+
+.not-opt {
+  padding-top: 10px;
+}
+
+.col-md-6 {
+  *width: 45%;
+  *float: left;
+}
+
+.col-xs-4 {
+  *width: 23%;
+  *float: left;
+}
+
+.hidden {
+  display: none;
+}
+
+#context{
+  ul{
+    width:80px;
+    float: left;
+  }
+}
+.input-lg{
+  padding-top: 5px;
+}
