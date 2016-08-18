@@ -1,66 +1,52 @@
 <div class="row">
-  <div class="col-md-6" style="text-align: center">
-    <div id="tabContent" class="tab-content" style="width: 100%">
+  <div class="col-md-6 show">
+    <div id="context-tabContent" class="tab-content">
       <div class="tab-pane fade in active" id="pic">
         <%= image_tag(@image.url, :border => 0, :class => 'img-responsive img-thumbnail', :width => 500) %>
       </div>
-      <div class="tab-pane fade" id="context">
-        <!--TODO:align-center-->
+      <div class="tab-pane fade row" id="context">
         <% for i in 0...3 %>
-            <ul class="list-unstyled">
-              <% for j in 0...5 %>
-                  <li<%= i==1&&j==3 ? ' class=current' : '' %>><%= image_tag('img'+j.to_s+'.jpg') %></li>
-              <% end %>
-            </ul>
+            <div class="col-xs-4 col-md-2<%= i==0 ? ' col-md-offset-3' : '' %>">
+              <ul class="list-unstyled">
+                <% for j in 0...5 %>
+                    <li class="pic_h"><%= image_tag 'img'+j.to_s+'.jpg', :class => i==1&&j==3 ? ' current' : '' %></li>
+                <% end %>
+              </ul>
+            </div>
         <% end %>
       </div>
       &nbsp;
       <div class="clearfix"></div>
     </div>
 
-    <ul id="tab" class="list-unstyled list-inline">
-      <!--TODO:styles-->
+    <ul id="context-tab" class="list-unstyled list-inline">
       <li class="active">
         <a href="#pic" data-toggle="tab">显示单字</a>
       </li>
       <li>
         <a href="#context" data-toggle="tab">显示上下文</a>
       </li>
+      &nbsp;
     </ul>
   </div>
   <div class="col-md-6">
-    <form action="<%= image_candidates_url @image.id %>" method="put">
       <div class="row" id="opt-list">
         <%= render @image.candidates %>
-
       </div>
       <div class="not-opt">
-        <input type="hidden" name="id">
-        <input type="text" value="其他" size="9" onclick="this.value=='其他'&&(this.value='')" class="input-lg">
-        <%= link_to "提交", "javascript:void(0)", method: :put, :id => 'submit', :class => 'btn btn-lg btn-default' %>
-        <input type="button" value="跳过" class="btn btn-lg btn-default"
-               onclick="window.location='<%=image_url rand(Image.count)+1%>'">
+        <%= form_for [@image, @image.candidates.new] do |f| %>
+            <%= f.text_field :content,:size=>9,:placeholder=>'其他',:class=>'input-lg',
+                             :id=>'other',:onclick=>'input()' %>
+            <%= link_to "提交", "javascript:void(0)", method: :put, :id => 'submit', :class => 'btn btn-lg btn-default' %>
+            <input type="button" value="跳过" class="btn btn-lg btn-default"
+                   onclick="window.location='<%=image_url rand(Image.count)+1%>'">
+        <% end %>
       </div>
       <p class="help-block">点击你认为正确的字或输入其他字</p>
-    </form>
   </div>
 </div>
 <hr>
-<!--TODO:merge add-candidate submit-->
-<div>
-  <%= form_for [@image, @image.candidates.new] do |f| %>
-      <div class="field">
-        <%= f.label :content %>
-        <%= f.text_field :content %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Add New Candidate" %>
-      </div>
 
-  <% end %>
-</div>
-
-<br />
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %> |
 
@@ -69,16 +55,25 @@
 
 <script>
   $(document).ready(function () {
-    $("#nav-2").addClass("active");
     $("#opt-list .opt div").click(function () {
       if ($(this).hasClass("selected")) {
         $("#opt-list .opt div").removeClass("selected");
-        $("#submit").href("javascript:void(0)")
+        $("#submit").attr("href","javascript:void(0)")
       } else {
         $("#opt-list .opt div").removeClass("selected");
         $(this).addClass("selected");
+        $("#other").val('');
         $("#submit").attr("href", "<%=image_candidates_url @image.id%>/" + $(this).attr("candidate-id"))
       }
-    })
-  })
+    });
+    $("#submit").click(function () {
+      if($("#other").val()){
+        $("form").submit()
+      }
+    });
+  });
+  function input() {
+    $("#opt-list .opt div").removeClass("selected");
+    $("#submit").attr("href","javascript:void(0)")
+  }
 </script>

@@ -1,29 +1,14 @@
 <div class="row">
   <% @images.each do |image| %>
-      <div class="col-xs-3 col-sm-2 col-md-1" style="height: 100px">
-        <div style="right: 0;top:0;font-size: 15px;position: absolute;  width: 20px">
-          <!--TODO:styles and auth-->
-          <%= link_to 'E', edit_image_path(image) %><br>
-          <%= link_to 'X', image, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <div class="col-xs-3 col-sm-2 col-md-1 pic_h">
+        <div class="topright">
+          <%= link_to image_tag("edit.jpg",:width => 15), edit_image_path(image) %><br>
+          <%= link_to image_tag("delete.jpg",:width => 15), image, method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
         <%= link_to image_tag(image.url, :border => 0,:class=>'img-responsive'), image %>
       </div>
   <% end %>
 </div>
-<ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <% for i in 1...6 %>
-      <li><%=link_to i,:action=>"index",:page=>i %></li>
-  <% end %>
-  <li><a href="#">&raquo;</a></li>
-</ul>
 
-<script>
-  $("#nav-1").addClass("active")
-</script>
+<%= will_paginate @images, renderer: BootstrapPagination::Rails%>
 
-
-<br>
-<%= will_paginate @images%>
-
-<%= link_to 'New Image', new_image_path %>

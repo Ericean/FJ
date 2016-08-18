@@ -23,9 +23,18 @@
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li id="nav-1"><%= link_to "文字列表", {:controller => "images"} %></li>
-        <li id="nav-2"><%= link_to "文字辨认", {:controller => "images", :action => "show", :id => rand(Image.count)+1} %></li>
-        <li id="nav-3"><%= link_to 'Show Result', result_path%></li>
+        <li<%= nav 'images','index' %>>
+          <%= link_to "文字列表", {:controller => "images"} %>
+        </li>
+        <li<%= nav 'images','show' %>>
+          <%= link_to "文字辨认", {:controller => "images", :action => "show", :id => rand(Image.count)+1} %>
+        </li>
+        <li<%= nav 'images','result' %>>
+          <%= link_to 'Show Result', result_path%>
+        </li>
+        <li<%= nav 'images','new' %>>
+          <%= link_to 'New Image', new_image_path %>
+        </li>
       </ul>
       <div style="float: right;padding-top: 15px">
         <% if logged_in? %>
