@@ -6,6 +6,8 @@ Vote.destroy_all
 #seed admins table
 Admin.create! [
 {name: "admin", password:"admin"},
+{name: "somebody", password:"somebody"},
+{name: "Jim", password:"jimisfunny"},
 {name: "Ze Gao", password: "abc123"},
 {name: "Tina", password:"123abc"}
 ]

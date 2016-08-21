@@ -19,10 +19,14 @@
 		<%= f.submit "Add New Candidate"%>
 	</div>	
 	<%end%>
+	</ br>
+	<%= link_to 'Reset',  image_reset_path(@image), method: :post %>
 </div>
 
 <br />	
-<%= link_to 'Edit', edit_image_path(@image) %> |
+<% if current_user.name === "admin" %>
+	<%= link_to 'Edit', edit_image_path(@image) %> |
+<%end%>
 <%= link_to 'Back', images_path %> |
 
 <%= link_to_unless @prev.blank?, 'Prev', @prev %> |

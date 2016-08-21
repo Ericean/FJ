@@ -1,5 +1,5 @@
 class CandidatesController < ApplicationController
-before_action :set_image,:set_vote, only: [:create,:destroy,:update]
+before_action :set_image,:set_vote, only: [:create,:destroy,:update,:reset]
 
 def create 
 	@candidate= @image.candidates.new(candidate_params)
@@ -22,14 +22,6 @@ def create
 	
 end
 
-def destroy 
-	@candidate= @image.candidates.find(params[:id])
-    @candidate.destroy
-    # @image.update_status
-    redirect_to @image, notice: "Candidate deleted!" 
-end
-
-
 def update
 	if  @vote.voted?
 		redirect_to @image, alert: "You've voted!"
@@ -48,6 +40,42 @@ def update
 	end
 	
 end
+
+
+
+def destroy 
+	@candidate= @image.candidates.find(params[:id])
+    @candidate.destroy
+    @vote.reset
+    @image.update_status
+    redirect_to @image, notice: "Candidate deleted!" 
+end
+
+
+def reset
+	#delete the new candidate user created
+	# or just downvote 
+	if @vote.voted?
+		@can=@image.candidates.find(@vote.voted)
+		if @can.ownership==current_user.id && (not current_user.name === "admin") 
+			@can.destroy
+		else 
+			@can.votesum-=1
+		end
+
+		@vote.reset
+		@image.update_status
+
+		if @can.save
+			redirect_to @image, notice: "Reset Successfully!"
+		else 
+			redirect_to @image, alert:"Reset Failed!"
+		end
+	else 
+		redirect_to @image
+	end
+end
+
 
 private
 	

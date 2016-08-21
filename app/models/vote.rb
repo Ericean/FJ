@@ -5,4 +5,10 @@ class Vote < ActiveRecord::Base
   def voted? 
   	self.voted != 0
   end 
+
+  def reset
+  	self.voted=0
+  	self.save
+  end
+
 end

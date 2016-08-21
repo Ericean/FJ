@@ -12,8 +12,10 @@
       <tr>
         <td><%= image_tag(image.url, :border => 0) %></td>
         <td><%= link_to 'Show', image %></td>
+        <% if current_user.name === "admin" %>
         <td><%= link_to 'Edit', edit_image_path(image) %></td>
         <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -21,5 +23,6 @@
 
 <br>
 <%= will_paginate @images%>
-
-<%= link_to 'New Image', new_image_path %>
+<% if current_user.name === "admin" %>
+  <%= link_to 'New Image', new_image_path %>
+<% end %>
