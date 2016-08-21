@@ -9,21 +9,23 @@ def create
 		redirect_to @image, alert: "Empty content is not allowed!"
 	else
 		@candidate.votesum+=1
+		@candidate.ownership= current_user.id
 		if @candidate.save && 
 			@vote.voted=@candidate.id
 			@vote.save
+			@image.update_status
 			redirect_to @image, notice: "Candidates successfully added!"
 		else 
 		redirect_to @image, alert: "Unable to add new candidate!"
 		end
 	end
-	@image.update_status
+	
 end
 
 def destroy 
 	@candidate= @image.candidates.find(params[:id])
     @candidate.destroy
-    @image.update_status
+    # @image.update_status
     redirect_to @image, notice: "Candidate deleted!" 
 end
 
@@ -42,8 +44,9 @@ def update
 	    else
 	    	redirect_to @image, alert: "Vote Failed!" 
 	    end
+	    @image.update_status
 	end
-	@image.update_status
+	
 end
 
 private
@@ -57,7 +60,7 @@ private
 	end
 
 	def candidate_params 
-		params.require(:candidate).permit(:content, :votesum)
+		params.require(:candidate).permit(:content, :votesum, :ownership)
 	end
 
 end
