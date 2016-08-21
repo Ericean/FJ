@@ -3,7 +3,7 @@ class CreateCandidates < ActiveRecord::Migration
     create_table :candidates do |t|
       t.string :content
       t.integer :votesum, :default => 0
-      t.integer :ownership
+      t.integer :ownership, :default => 0
       t.references :image, index: true, foreign_key: true
 
       t.timestamps null: false

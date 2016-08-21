@@ -27,7 +27,7 @@ class Image < ActiveRecord::Base
     #update image status
     def update_status
       sum=self.candidates.sum(:votesum)
-      result= ((3*sum) >= (2*(Admin.count)))
+      result= ((5*sum) >= (4*(Admin.count)))
       self.flag=result
       self.save 
     end

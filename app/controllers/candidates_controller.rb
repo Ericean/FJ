@@ -32,11 +32,12 @@ def update
 		if @candidate.save 
 			@vote.voted=@candidate.id
 			@vote.save
+			@image.update_status
 			redirect_to @image, notice: "Votes updated!"
 	    else
 	    	redirect_to @image, alert: "Vote Failed!" 
 	    end
-	    @image.update_status
+	    
 	end
 	
 end
@@ -57,16 +58,15 @@ def reset
 	# or just downvote 
 	if @vote.voted?
 		@can=@image.candidates.find(@vote.voted)
-		if @can.ownership==current_user.id && (not current_user.name === "admin") 
+		if @can.ownership==current_user.id  
 			@can.destroy
 		else 
 			@can.votesum-=1
 		end
-
-		@vote.reset
-		@image.update_status
-
+		
 		if @can.save
+			@vote.reset
+			@image.update_status
 			redirect_to @image, notice: "Reset Successfully!"
 		else 
 			redirect_to @image, alert:"Reset Failed!"
