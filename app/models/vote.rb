@@ -3,6 +3,6 @@ class Vote < ActiveRecord::Base
   belongs_to :image
 
   def voted? 
-  	self.voted
+  	self.voted != 0
   end 
 end

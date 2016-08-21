@@ -5,6 +5,7 @@ Vote.destroy_all
 
 #seed admins table
 Admin.create! [
+{name: "admin", password:"admin"},
 {name: "Ze Gao", password: "abc123"},
 {name: "Tina", password:"123abc"}
 ]
@@ -18,8 +19,7 @@ end
 
 #seed candidates table
 img=Image.find_by url: "img0"
-img.flag=true
-img.save!
+
 
 img.candidates.create! [
 {content: "藏"},
