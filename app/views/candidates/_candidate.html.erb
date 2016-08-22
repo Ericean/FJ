@@ -1,11 +1,11 @@
-	<li>
-		<div class="candidate">
-		<%= candidate.content %> &nbsp
-		<% if current_user.name === "admin" %>
-		<%= link_to "delete", [@image, candidate], method: :delete, data: { confirm: 'Are you sure?' }	 %> |
-		<% end %>
-		<%= link_to image_tag("vote.svg.png", :border => 0), [@image, candidate], method: :put%> |
-		<%= candidate.votesum %>
-		</div>
-	</li>
-
+<div class="col-xs-4 col-md-3 opt">
+  <div candidate-id="<%= candidate.id %>">
+    <div class="topright">
+      Sum:<%= candidate.votesum %>
+	  <% if current_user.name === "admin" %>
+      <%= link_to image_tag("delete.jpg", :width => 15), [@image, candidate], method: :delete, data: {confirm: 'Are you sure?'} %>
+	  <% end %>
+    </div>
+    <%= candidate.content %>
+  </div>
+</div>

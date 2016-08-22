@@ -2,23 +2,71 @@
 <html>
 <head>
   <title>FoJing Revision</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<% if logged_in? %>
-	<div style= 'float:right'>
-		Logged in as <%= current_user.name%> | <%= link_to "Logout", logout_path, method: :delete %>
-	</div>
-<%end%>
-
-
-<%flash.each do |key,val|%>
-	<p id= "<%= key %>"><%= val %></p>
-<%end%>
-
-<%= yield %>
-
+<div class="container">
+  <!--div style="height: 160px">BANNER</div-->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#example-navbar-collapse">
+        <span class="sr-only">切换导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">网站名称</a>
+    </div>
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li<%= nav 'images','index' %>>
+          <%= link_to "文字列表", {:controller => "images"} %>
+        </li>
+        <li<%= nav 'images','show' %>>
+          <%= link_to "文字辨认", {:controller => "images", :action => "show", :id => rand(Image.count)+1} %>
+        </li>
+        <li<%= nav 'images','result' %>>
+          <%= link_to 'Show Result', result_path%>
+        </li>
+        <li<%= nav 'images','new' %>>
+          <%= link_to 'New Image', new_image_path %>
+        </li>
+      </ul>
+      <div style="float: right;padding-top: 15px">
+        <% if logged_in? %>
+            <div style='float:right'>
+              Logged in as <%= current_user.name %> | <%= link_to "Logout", logout_path, method: :delete %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+  <% if flash.count>0 %>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+           aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">提示</h4>
+            </div>
+            <div class="modal-body">
+              <% flash.each do |key, val| %>
+                  <p id="<%= key %>"><%= val %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        $("#myModal").modal("show")
+      </script>
+  <% end %>
+  <%= yield %>
+</div>
 </body>
 </html>
