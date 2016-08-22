@@ -1,5 +1,5 @@
 class CandidatesController < ApplicationController
-before_action :set_image,:set_vote, only: [:create,:destroy,:update]
+before_action :set_image,:set_vote, only: [:create,:destroy,:update,:reset]
 
 def create 
 	@candidate= @image.candidates.new(candidate_params)
@@ -9,21 +9,18 @@ def create
 		redirect_to @image, alert: "Empty content is not allowed!"
 	else
 		@candidate.votesum+=1
-		@vote.voted=true
-		if @candidate.save && @vote.save
-		redirect_to @image, notice: "Candidates successfully added!"
+		@candidate.ownership= current_user.id
+		if @candidate.save && 
+			@vote.voted=@candidate.id
+			@vote.save
+			@image.update_status
+			redirect_to @image, notice: "Candidates successfully added!"
 		else 
 		redirect_to @image, alert: "Unable to add new candidate!"
 		end
 	end
+	
 end
-
-def destroy 
-	@candidate= @image.candidates.find(params[:id])
-    @candidate.destroy
-    redirect_to @image, notice: "Candidate deleted!" 
-end
-
 
 def update
 	if  @vote.voted?
@@ -31,14 +28,54 @@ def update
 	else
 		@candidate=@image.candidates.find(params[:id])
 		@candidate.votesum+=1
-		@vote.voted=true
-		if @candidate.save && @vote.save
+		
+		if @candidate.save 
+			@vote.voted=@candidate.id
+			@vote.save
+			@image.update_status
 			redirect_to @image, notice: "Votes updated!"
 	    else
 	    	redirect_to @image, alert: "Vote Failed!" 
 	    end
+	    
+	end
+	
+end
+
+
+
+def destroy 
+	@candidate= @image.candidates.find(params[:id])
+    @candidate.destroy
+    @vote.reset
+    @image.update_status
+    redirect_to @image, notice: "Candidate deleted!" 
+end
+
+
+def reset
+	#delete the new candidate user created
+	# or just downvote 
+	if @vote.voted?
+		@can=@image.candidates.find(@vote.voted)
+		if @can.ownership==current_user.id  
+			@can.destroy
+		else 
+			@can.votesum-=1
+		end
+		
+		if @can.save
+			@vote.reset
+			@image.update_status
+			redirect_to @image, notice: "Reset Successfully!"
+		else 
+			redirect_to @image, alert:"Reset Failed!"
+		end
+	else 
+		redirect_to @image
 	end
 end
+
 
 private
 	
@@ -51,7 +88,7 @@ private
 	end
 
 	def candidate_params 
-		params.require(:candidate).permit(:content, :votesum)
+		params.require(:candidate).permit(:content, :votesum, :ownership)
 	end
 
 end

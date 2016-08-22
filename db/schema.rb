@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160814091005) do
   create_table "candidates", force: :cascade do |t|
     t.string   "content"
     t.integer  "votesum",    default: 0
+    t.integer  "ownership",  default: 0
     t.integer  "image_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
@@ -38,11 +39,11 @@ ActiveRecord::Schema.define(version: 20160814091005) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.boolean  "voted",      default: false
+    t.integer  "voted",      default: 0
     t.integer  "admin_id"
     t.integer  "image_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "votes", ["admin_id"], name: "index_votes_on_admin_id"

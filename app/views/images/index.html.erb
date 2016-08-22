@@ -1,10 +1,12 @@
 <div class="row">
   <% @images.each do |image| %>
       <div class="col-xs-3 col-sm-2 col-md-1 pic_h">
+	  <% if current_user.name === "admin" %>
         <div class="topright">
           <%= link_to image_tag("edit.jpg",:width => 15), edit_image_path(image) %><br>
           <%= link_to image_tag("delete.jpg",:width => 15), image, method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
+		<% end %>
         <%= link_to image_tag(image.url, :border => 0,:class=>'img-responsive'), image %>
       </div>
   <% end %>
@@ -12,3 +14,6 @@
 
 <%= will_paginate @images, renderer: BootstrapPagination::Rails%>
 
+<% if current_user.name === "admin" %>
+  <%= link_to 'New Image', new_image_path %>
+<% end %>

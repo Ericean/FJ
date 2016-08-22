@@ -17,7 +17,6 @@
       </div>
       &nbsp;
     </div>
-
     <ul id="context-tab" class="list-unstyled list-inline">
       <li class="active">
         <a href="#pic" data-toggle="tab">显示单字</a>
@@ -39,6 +38,7 @@
             <%= link_to "提交", "javascript:void(0)", method: :put, :id => 'submit', :class => 'btn btn-lg btn-default' %>
             <input type="button" value="跳过" class="btn btn-lg btn-default"
                    onclick="window.location='<%=image_url rand(Image.count)+1%>'">
+			<%= link_to 'Reset',  image_reset_path(@image), method: :post %>
         <% end %>
       </div>
       <p class="help-block">点击你认为正确的字或输入其他字</p>
@@ -46,7 +46,12 @@
 </div>
 <hr>
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
+
+<br />	
+<% if current_user.name === "admin" %>
+	<%= link_to 'Edit', edit_image_path(@image) %> |
+<%end%>
+
 <%= link_to 'Back', images_path %> |
 
 <%= link_to_unless @prev.blank?, 'Prev', @prev %> |
