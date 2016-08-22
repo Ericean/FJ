@@ -12,10 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
+    <span><%= f.label :url %></span>
+    <%= f.text_field :url, :class=>'input-lg' %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class=>'btn btn-lg btn-default' %>
   </div>
 <% end %>

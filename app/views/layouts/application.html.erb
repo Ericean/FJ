@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="container">
+<div class="container border">
   <!--div style="height: 160px">BANNER</div-->
   <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
@@ -23,18 +23,20 @@
     </div>
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li<%= nav 'images','index' %>>
+        <li<%= nav 'images', 'index' %>>
           <%= link_to "文字列表", {:controller => "images"} %>
         </li>
-        <li<%= nav 'images','show' %>>
+        <li<%= nav 'images', 'show' %>>
           <%= link_to "文字辨认", {:controller => "images", :action => "show", :id => rand(Image.count)+1} %>
         </li>
-        <li<%= nav 'images','result' %>>
-          <%= link_to 'Show Result', result_path%>
-        </li>
-        <li<%= nav 'images','new' %>>
-          <%= link_to 'New Image', new_image_path %>
-        </li>
+        <% if current_user.name === "admin" %>
+            <li<%= nav 'images', 'result' %>>
+              <%= link_to 'Show Result', result_path %>
+            </li>
+            <li<%= nav 'images', 'new' %>>
+              <%= link_to 'New Image', new_image_path %>
+            </li>
+        <% end %>
       </ul>
       <div style="float: right;padding-top: 15px">
         <% if logged_in? %>
@@ -66,7 +68,9 @@
         $("#myModal").modal("show")
       </script>
   <% end %>
+  <div class="main">
   <%= yield %>
+  </div>
 </div>
 </body>
 </html>

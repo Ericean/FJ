@@ -150,3 +150,10 @@ h1 {
 .input-lg {
   padding-top: 5px;
 }
+.border{
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+html, body, .border {
+  height: 100%;
+}
