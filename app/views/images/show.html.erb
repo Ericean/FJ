@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-md-6 show">
+  <div class="col-xs-12 col-md-6 show">
     <div id="context-tabContent" class="tab-content">
-      <div class="tab-pane fade in active" id="pic">
+      <div class="tab-pane fade in active center" id="pic">
         <%= image_tag(@image.url, :border => 0, :class => 'img-responsive img-thumbnail', :width => 500) %>
       </div>
       <div class="tab-pane fade row" id="context">
@@ -9,14 +9,13 @@
             <div class="col-xs-4 col-md-2<%= i==0 ? ' col-md-offset-3' : '' %>">
               <ul class="list-unstyled">
                 <% for j in 0...5 %>
-                    <li class="pic_h"><%= image_tag 'img'+j.to_s+'.jpg', :class => i==1&&j==3 ? ' current' : '' %></li>
+                    <li class="pic_h center"><%= image_tag 'img'+j.to_s+'.jpg', :class => i==1&&j==3 ? ' current' : '' %></li>
                 <% end %>
               </ul>
             </div>
         <% end %>
       </div>
       &nbsp;
-      <div class="clearfix"></div>
     </div>
 
     <ul id="context-tab" class="list-unstyled list-inline">
@@ -29,7 +28,7 @@
       &nbsp;
     </ul>
   </div>
-  <div class="col-md-6">
+  <div class="col-xs-12 col-md-6">
       <div class="row" id="opt-list">
         <%= render @image.candidates %>
       </div>
