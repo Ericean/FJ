@@ -4,7 +4,7 @@
 
 
 <ul>
-<%= render @image.candidates %>
+<%= render @image.candidates.order("candidates.votesum DESC") %>
 </ul>
 
 
