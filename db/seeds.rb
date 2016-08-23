@@ -15,17 +15,17 @@ Admin.create! [
 
 #seed images table
 5.times do |index|
-	Image.create! [{url: "img#{index}"}]
+	Image.create! [{url: "imgL1N#{index}", line: 1, order: index}]
 end
 
 #seed candidates table
-img=Image.find_by url: "img0"
+img=Image.find_by url: "imgL1N0"
 img.candidates.create! [
 {content: "藏"},
 {content: "臧"},
 {content: "臟"}
 ]
-img1= Image.find_by url: "img1"
+img1= Image.find_by url: "imgL1N1"
 img1.candidates.create! [
 {content: "宗"},
 {content: "崇"},

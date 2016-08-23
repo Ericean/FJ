@@ -1,5 +1,5 @@
 *** Projects models
 ****admin : name, password_digest ,priviledge(optional)
-****image : url, flag:boolean
+****image : url, line:integer, order:integer, flag:boolean
 ****candidate: image:refs ,content, votesum:integer, ownership:integer
 ****vote: admin:refs, image:refs, voted:integer
