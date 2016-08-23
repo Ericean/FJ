@@ -15,7 +15,7 @@ Admin.create! [
 
 #seed images table
 5.times do |index|
-	Image.create! [{url: "imgL1N#{index}", line: 1, order: index}]
+	Image.create! [{url: "imgL1N#{index}", line: 1, number: index}]
 end
 
 #seed candidates table

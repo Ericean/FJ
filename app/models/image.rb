@@ -11,9 +11,9 @@ class Image < ActiveRecord::Base
       Image.where(" id > ?",  self.id).where("flag = ?", false).first
     end
     
-    # def get_context
-    # 	#
-    # end
+    def get_context
+    	Image.where("line = ?", self.line).order("images.number")
+    end
 
     def decided?
       self.flag

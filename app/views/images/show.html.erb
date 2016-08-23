@@ -2,6 +2,9 @@
     <%= image_tag(@image.url, :border => 0) %>
 </p>
 
+<% @image.get_context.each do |img| %>
+	<%= image_tag(img.url, :border => 0) %>
+<% end %>
 
 <ul>
 <%= render @image.candidates.order("candidates.votesum DESC") %>
