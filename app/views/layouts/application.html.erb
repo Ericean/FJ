@@ -12,21 +12,22 @@
 </head>
 <body>
 <div class="container <%= params[:controller]=='sessions' ? '' : 'border' %>">
-  <div class="center">
+  <div class="user">
     <% if logged_in? %>
-        <p style="float: right">
-          Logged in as <%= current_user.name %> | <%= link_to "Logout", logout_path, method: :delete %>
+        <p>
+          <%= image_tag 'user.gif', :width => 20 %> <%= current_user.name %>
+          | <%= link_to "Logout", logout_path, method: :delete %>
         </p>
     <% end %>
-    <% if flash.count > 0 %>
-        <% flash.each do |key, val| %>
-            <p id="<%= key %>"><%= val %></p>
-        <% end %>
+
+    <% flash.each do |key, val| %>
+        <p id="<%= key %>"><%= val %></p>
     <% end %>
+
   </div>
-
-  <%= yield %>
-
+  <div>
+    <%= yield %>
+  </div>
 </div>
 </body>
 </html>
