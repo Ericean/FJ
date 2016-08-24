@@ -45,6 +45,7 @@
 
 h1 {
   color: purple;
+  margin-top: 5px;
 }
 
 #notice {
@@ -107,7 +108,7 @@ h1 {
 }
 
 .font-big {
-  font-size: 5em;
+  font-size: 2em;
   font-family: 楷体;
 }
 
@@ -132,14 +133,13 @@ h1 {
   }
 }
 
-
-
 .tab-content {
   width: 100%;
 }
 
 .input-lg {
   padding-top: 5px;
+  margin-right: 15px;
 }
 
 .border {
@@ -151,5 +151,13 @@ html, body, .border {
   height: 100%;
 }
 .container{
-  padding-top: 40px;
+  padding-top: 10px;
+}
+
+.user{
+  font-size: 1.7em;
+  text-align: right;
+  p{
+    margin-bottom: 0;
+  }
 }
