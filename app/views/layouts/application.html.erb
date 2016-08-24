@@ -2,23 +2,31 @@
 <html>
 <head>
   <title>FoJing Revision</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <% if params[:controller] == 'sessions' %>
+      <%= stylesheet_link_tag stylesheet_path 'sessions/login' %>
+  <% end %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<% if logged_in? %>
-	<div style= 'float:right'>
-		Logged in as <%= current_user.name%> | <%= link_to "Logout", logout_path, method: :delete %>
-	</div>
-<%end%>
+<div class="container <%= params[:controller]=='sessions' ? '' : 'border' %>">
+  <div class="center">
+    <% if logged_in? %>
+        <p style="float: right">
+          Logged in as <%= current_user.name %> | <%= link_to "Logout", logout_path, method: :delete %>
+        </p>
+    <% end %>
+    <% if flash.count > 0 %>
+        <% flash.each do |key, val| %>
+            <p id="<%= key %>"><%= val %></p>
+        <% end %>
+    <% end %>
+  </div>
 
+  <%= yield %>
 
-<%flash.each do |key,val|%>
-	<p id= "<%= key %>"><%= val %></p>
-<%end%>
-
-<%= yield %>
-
+</div>
 </body>
 </html>

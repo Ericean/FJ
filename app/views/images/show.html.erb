@@ -1,36 +1,53 @@
-<p>
-    <%= image_tag(@image.url, :border => 0) %>
-</p>
+<h1>Show Image</h1>
+<div class="row">
+  <div class="col-xs-12 col-md-6 show">
+    <div class="center"><%= image_tag(@image.url, :border => 0, :width => 100) %></div>
+    <hr>
+    <div class="context">
+      <div class="col">
+        <% @image.get_context.each_with_index do |img, key| %>
+            <div>
+              <%= image_tag img.url, :border => 0, :class => img.id==@image.id ? ' current' : '' %>
+            </div>
+            <% if key%4==3 %>
+                </div>
+                <div class="col">
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+    &nbsp;
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <table class="table table-striped">
+      <%= render @image.candidates.order("candidates.votesum DESC") %>
+      <tr>
+        <td colspan="4">
+          <a href="javascript:void(0)" onclick="$('.not-opt').fadeIn();$(this).hide()">
+            <%= image_tag 'add.png', :width => 40 %>
+          </a>
+          <div class="not-opt" style="display: none">
+            <%= form_for [@image, @image.candidates.new] do |f| %>
+                <%= f.text_field :content, :size => 9, :placeholder => '其他', :class => 'input-lg',
+                                 :id => 'other', :onclick => 'input()' %>
+                <%= f.submit "提交", :class => 'btn btn-lg btn-default' %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-<% @image.get_context.each do |img| %>
-	<%= image_tag(img.url, :border => 0) %>
-<% end %>
-
-<ul>
-<%= render @image.candidates.order("candidates.votesum DESC") %>
-</ul>
-
-
-<br />	
-<div>
-	<%= form_for [@image, @image.candidates.new] do |f|%>
-	<div class="field">
-		<%= f.label :content %>
-		<%= f.text_field :content %>
-	</div>
-	<div class="actions">
-		<%= f.submit "Add New Candidate"%>
-	</div>	
-	<%end%>
-	</ br>
-	<%= link_to 'Reset',  image_reset_path(@image), method: :post %>
+    <p class="font-mid">
+      <% if current_user.name === "admin" %>
+          <%= link_to 'Edit', edit_image_path(@image) %> |
+      <% end %>
+      <%= link_to 'Back', images_path %> |
+      <%= link_to_unless @prev.blank?, 'Prev', @prev %> |
+      <%= link_to_unless @next.blank?, 'Next', @next %> |
+      <%= link_to 'Reset', image_reset_path(@image), method: :post %>
+    </p>
+  </div>
 </div>
 
-<br />	
-<% if current_user.name === "admin" %>
-	<%= link_to 'Edit', edit_image_path(@image) %> |
-<%end%>
-<%= link_to 'Back', images_path %> |
 
-<%= link_to_unless @prev.blank?, 'Prev', @prev %> |
-<%= link_to_unless @next.blank?, 'Next', @next %>
+

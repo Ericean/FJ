@@ -1,6 +1,6 @@
 <h1>Listing Images</h1>
-<div><%= link_to 'Show Result', result_path%></td></div></br>
-<table>
+<div class="font-mid"><%= link_to 'Show Result', result_path%></div>
+<table class="table table-striped font-mid">
   <thead>
     <tr>
       <th>Character</th>
@@ -11,7 +11,7 @@
 
   <tbody>
     <% @images.each do |image| %>
-      <tr>
+      <tr style="height: 90px">
         <td><%= image_tag(image.url, :border => 0) %></td>
         <td><%= image.flag ? "Yes" : "No" %></td>
         <td><%= link_to 'Show', image %></td>
@@ -27,5 +27,5 @@
 <br>
 <%= will_paginate @images%>
 <% if current_user.name === "admin" %>
-  <%= link_to 'New Image', new_image_path %>
+  <div class="font-mid"><%= link_to 'New Image', new_image_path %></div>
 <% end %>
