@@ -4,32 +4,38 @@ Candidate.destroy_all
 Vote.destroy_all
 
 #seed admins table
-Admin.create! [
-{name: "admin", password:"admin"},
-{name: "somebody", password:"somebody"},
-{name: "Jim", password:"jimisfunny"},
-{name: "Ze Gao", password: "abc123"},
-{name: "Tina", password:"123abc"}
-]
-
-
-#seed images table
-5.times do |index|
-	Image.create! [{url: "imgL1N#{index}", line: 1, number: index}]
+Dir["#{Rails.root.join("extra/users")}/*"].each do |f|
+	next unless File.file?(f) 
+	File.open f do |file|
+		file.each do |record|
+			user, passwd = record.chomp.split(',').map(&:strip)
+			Admin.create! [{name: user, password: passwd}]
+		end
+	end
+	
 end
 
-#seed candidates table
-img=Image.find_by url: "imgL1N0"
-img.candidates.create! [
-{content: "藏"},
-{content: "臧"},
-{content: "臟"}
-]
-img1= Image.find_by url: "imgL1N1"
-img1.candidates.create! [
-{content: "宗"},
-{content: "崇"},
-]
+# #seed images table & candidates
+
+Dir["#{Rails.root.join("extra/candidates")}/*"].each do |f|
+	next unless File.file?(f) 
+	File.open f do |file|
+		file.each do |record|
+			url, cans = record.chomp.split(',').map(&:strip)
+			#seed images table
+			page, line, number = url.split(/L|N/).map(&:strip)
+			image= Image.new(url: url, line: line.to_i, number: number.to_i)
+			image.save
+
+			#seed candidates
+			candidates= cans.split(" ").map(&:strip) unless cans.nil?
+			unless candidates.nil?
+				candidates.each { |e| image.candidates.create! [{content:e}] }
+			end
+		end
+	end
+	
+end
 
 #seed votes table
 users= Admin.all
@@ -40,6 +46,5 @@ users.each do |user|
 		vote.save!
 	end
 end
-
 
 
