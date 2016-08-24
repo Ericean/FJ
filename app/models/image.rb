@@ -1,14 +1,17 @@
 class Image < ActiveRecord::Base
+  UNDECIDED=0
+  DECIDED=1
+  BASE=2
 	has_many :candidates
 	has_many :votes
 	has_many :admins, :through => :votes
 
 	def previous
-      Image.where(" id < ?",  self.id).where("flag = ?", false).last
+      Image.where(" id < ?",  self.id).last
     end
   
     def next
-      Image.where(" id > ?",  self.id).where("flag = ?", false).first
+      Image.where(" id > ?",  self.id).first
     end
     
     def get_context
@@ -16,7 +19,11 @@ class Image < ActiveRecord::Base
     end
 
     def decided?
-      self.flag
+      self.flag==DECIDED
+    end
+
+    def pinned?
+      self.flag!=UNDECIDED && self.flag != DECIDED
     end
 
     #get the final result
@@ -27,8 +34,7 @@ class Image < ActiveRecord::Base
     #update image status
     def update_status
       sum=self.candidates.sum(:votesum)
-      result= ((5*sum) >= (4*(Admin.count)))
-      self.flag=result
+      self.flag=((5*sum) >= (4*(Admin.count))) ? DECIDED : UNDECIDED
       self.save 
     end
 

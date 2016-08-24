@@ -8,19 +8,11 @@ class ImagesController < ApplicationController
   end
 
   def result
-    @results = Image.where("flag = ?", true).paginate(page:params[:page], per_page: 10)
+    @results = Image.where("flag >= ?", Image::DECIDED).paginate(page:params[:page], per_page: 10)
   end 
   # GET /images/1
   # GET /images/1.json
   def show
-    # if @image.decided? 
-    #   redirect_to images_path, alert: "Image's decided! No vote needed"
-    # else 
-    #   respond_to do |format|
-    #     format.html { render :show }
-    #     format.json { render :show, status: :ok, location: @image }
-    #   end
-    # end
   end
 
   # GET /images/new

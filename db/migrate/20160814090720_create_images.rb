@@ -4,7 +4,7 @@ class CreateImages < ActiveRecord::Migration
       t.string :url
       t.integer :line
       t.integer :number
-      t.boolean :flag, :default => false
+      t.integer :flag, :default => 0
       t.timestamps null: false
     end
   end

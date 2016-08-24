@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(version: 20160814091005) do
     t.string   "url"
     t.integer  "line"
     t.integer  "number"
-    t.boolean  "flag",       default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "flag",       default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "votes", force: :cascade do |t|
