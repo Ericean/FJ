@@ -22,17 +22,20 @@
     <table class="table table-striped">
       <%= render @image.candidates.order("candidates.votesum DESC") %>
       <tr>
-        <td colspan="4">
-          <a href="javascript:void(0)" onclick="$('.not-opt').fadeIn();$(this).hide()">
-            <%= image_tag 'add.png', :width => 40 %>
-          </a>
-          <div class="not-opt" style="display: none">
+        <td colspan="2">
             <%= form_for [@image, @image.candidates.new] do |f| %>
-                <%= f.text_field :content, :size => 9, :placeholder => '其他', :class => 'input-lg',
+              <a href="javascript:void(0)" onclick="$('#add-form').fadeIn();$(this).hide()">
+                <%= image_tag 'add.png', :width => 40 %>
+              </a>
+              <div style="display: none; float:left" id="add-form">
+                <%= f.text_field :content, :size =>6, :placeholder => '其他', :class => 'input-lg',
                                  :id => 'other', :onclick => 'input()' %>
                 <%= f.submit "提交", :class => 'btn btn-lg btn-default' %>
+              </div>
             <% end %>
-          </div>
+        </td>
+        <td>
+          <%= link_to 'Reset', image_reset_path(@image), method: :post, :class => 'btn btn-lg btn-default' %>
         </td>
       </tr>
     </table>
@@ -43,8 +46,7 @@
       <% end %>
       <%= link_to 'Back', images_path %> |
       <%= link_to_unless @prev.blank?, 'Prev', @prev %> |
-      <%= link_to_unless @next.blank?, 'Next', @next %> |
-      <%= link_to 'Reset', image_reset_path(@image), method: :post %>
+      <%= link_to_unless @next.blank?, 'Next', @next %>
     </p>
   </div>
 </div>

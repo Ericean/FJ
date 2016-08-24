@@ -1,12 +1,12 @@
-<tr class="row">
-  <td class="col-xs-5 font-big">
+<tr>
+  <td class="font-big" width="160">
     <%= candidate.content %>
   </td>
-  <td class="col-xs-2">
-    <%= link_to image_tag("vote.svg.png", :border => 0, :height => 90), [@image, candidate], method: :put %>
+  <td>
+    <%= link_to image_tag("vote.svg.png", :border => 0, :height => 45), [@image, candidate], method: :put %>
   </td>
-  <td class="col-xs-5 font-mid center">
-      <div style="margin-top: 30px">
+  <td class="font-mid center">
+      <div style="margin-top: 5px">
         Sum:<%= candidate.votesum %>&nbsp;
         <% if current_user.name === "admin" %>
           <%= link_to "Delete", [@image, candidate], method: :delete, data: {confirm: 'Are you sure?'} %>
