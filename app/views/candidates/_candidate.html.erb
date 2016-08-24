@@ -10,6 +10,13 @@
         Sum:<%= candidate.votesum %>&nbsp;
         <% if current_user.name === "admin" %>
           <%= link_to "Delete", [@image, candidate], method: :delete, data: {confirm: 'Are you sure?'} %>
+          <%if @image.pinned? %>
+              <% if @image.pinned_id == candidate.id%>
+              <%= link_to "Unpin", pin_path(@image, candidate), method: :post %>
+              <% end %>
+          <% else %>
+              <%= link_to "Pin", pin_path(@image, candidate), method: :post %>
+          <% end %>
         <% end %>
       </div>
   </td>

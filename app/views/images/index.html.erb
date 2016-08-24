@@ -13,7 +13,7 @@
   <% @images.each do |image| %>
       <tr style="height: 90px">
         <td><%= image_tag(image.url, :border => 0) %></td>
-        <td><%= image.decided? ? "Decided" : "Undecided" %></td>
+        <td><%= image.pinned? ? "Pinned" : (image.decided? ? "Decided" : "Undecided")%></td>
         <td>
           <%= link_to 'Show', image %>&nbsp;
           <% if current_user.name === "admin" %>

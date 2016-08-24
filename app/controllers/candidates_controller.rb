@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
-before_action :set_image,:set_vote, only: [:create,:destroy,:update,:reset]
-
+before_action :set_image,:set_vote, only: [:create,:destroy,:update,:reset, :pin]
+before_action :check_votability, only: [:create, :update, :reset]
 def create 
 	@candidate= @image.candidates.new(candidate_params)
 	if @vote.voted?
@@ -42,8 +42,6 @@ def update
 	
 end
 
-
-
 def destroy 
 	@candidate= @image.candidates.find(params[:id])
     @candidate.destroy
@@ -76,6 +74,12 @@ def reset
 	end
 end
 
+def pin
+	#toggle the pin state
+	@candidate=@image.candidates.find(params[:candidate_id])
+	@image.update_status(not(@image.pinned?), @candidate.id)
+	redirect_to @image, notice: "toggle pin status successfully!"
+end
 
 private
 	
@@ -91,4 +95,9 @@ private
 		params.require(:candidate).permit(:content, :votesum, :ownership)
 	end
 
+	def check_votability
+		if @image.pinned? 
+			redirect_to @image, alert: "Admin has pinned the result, your effort is in vain"
+		end
+	end
 end

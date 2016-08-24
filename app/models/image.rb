@@ -26,16 +26,31 @@ class Image < ActiveRecord::Base
       self.flag!=UNDECIDED && self.flag != DECIDED
     end
 
+    def pinned_id
+      if pinned?
+        self.flag- BASE
+      else 
+        0
+      end
+    end
+    
     #get the final result
     def result 
-       self.candidates.order("candidates.votesum DESC").first.content
+      if pinned?
+        self.candidates.find(pinned_id)
+      else 
+        self.candidates.order("candidates.votesum DESC").first
+      end
     end
 
     #update image status
-    def update_status
-      sum=self.candidates.sum(:votesum)
-      self.flag=((5*sum) >= (4*(Admin.count))) ? DECIDED : UNDECIDED
-      self.save 
+    def update_status(pin_action = false, pinned_id=0)
+      if pin_action 
+        self.flag= BASE + pinned_id
+      else 
+        sum=self.candidates.sum(:votesum)
+        self.flag=((5*sum) >= (4*(Admin.count))) ? DECIDED : UNDECIDED
+      end
+      self.save
     end
-
 end

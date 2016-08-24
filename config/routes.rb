@@ -11,8 +11,8 @@ Rails.application.routes.draw do
    resources :candidates, only: [:create, :destroy, :update] do
    end
  end
-  
- 
+   		
+ match "/images/:image_id/pin/:candidate_id/"  => "candidates#pin", as: :pin, via: :post		
  match  "/result" => "images#result" , as: "result", via: :get
 
 end

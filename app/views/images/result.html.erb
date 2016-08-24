@@ -12,7 +12,7 @@
     <% @results.each do |img| %>
       <tr>
         <td><%= image_tag(img.url, :border => 0) %></td>
-        <td class="font-big"><%= img.result %></td>
+        <td class="font-big"><%= img.result.content %></td>
     <% end %>
   </tbody>
 </table>
