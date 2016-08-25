@@ -15,7 +15,7 @@ Dir["#{Rails.root.join("extra/users")}/*"].each do |f|
 	
 end
 
-# #seed images table & candidates
+# #seed images tabl e & candidates
 
 Dir["#{Rails.root.join("extra/candidates")}/*"].each do |f|
 	next unless File.file?(f) 
