@@ -15,7 +15,7 @@ class Image < ActiveRecord::Base
     end
     
     def get_context
-    	Image.where("line = ?", self.line).order("images.number")
+    	Image.where("page = ? ", self.page).where("line = ?", self.line).order("images.number")
     end
 
     def decided?

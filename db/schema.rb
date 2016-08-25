@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160814091005) do
 
   create_table "images", force: :cascade do |t|
     t.string   "url"
+    t.string   "page"
     t.integer  "line"
     t.integer  "number"
     t.integer  "flag",       default: 0

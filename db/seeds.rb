@@ -23,8 +23,9 @@ Dir["#{Rails.root.join("extra/candidates")}/*"].each do |f|
 		file.each do |record|
 			url, cans = record.chomp.split(',').map(&:strip)
 			#seed images table
+			page = url[0..-6]
 			line, number = url[-5..-1].split(/L/).map(&:strip)
-			image= Image.new(url: url, line: line.to_i, number: number.to_i)
+			image= Image.new(url: url, page: page, line: line.to_i, number: number.to_i)
 			image.save
 
 			#seed candidates
