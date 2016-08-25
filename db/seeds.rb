@@ -37,14 +37,6 @@ Dir["#{Rails.root.join("extra/candidates")}/*"].each do |f|
 	
 end
 
-#seed votes table
-users= Admin.all
-imgs= Image.all
-users.each do |user|
-	imgs.each do |img|
-		vote = user.votes.new(admin:user, image:img)
-		vote.save!
-	end
-end
+
 
 

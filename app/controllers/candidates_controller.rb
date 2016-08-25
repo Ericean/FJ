@@ -3,14 +3,10 @@ before_action :set_image,:set_vote, only: [:create,:destroy,:update,:reset, :pin
 before_action :check_votability, only: [:create, :update, :reset]
 def create 
 	@candidate= @image.candidates.new(candidate_params)
-	if @vote.voted?
-		redirect_to @image, alert: "You've voted! Add new candidate is not allowed"
-	elsif  @candidate.content.empty?
-		redirect_to @image, alert: "Empty content is not allowed!"
-	else
+	if  not @vote.voted? 
 		@candidate.votesum+=1
 		@candidate.ownership= current_user.id
-		if @candidate.save && 
+		if @candidate.save
 			@vote.voted=@candidate.id
 			@vote.save
 			@image.update_status
@@ -18,6 +14,11 @@ def create
 		else 
 		redirect_to @image, alert: "Unable to add new candidate!"
 		end
+	elsif  @candidate.content.empty?
+		redirect_to @image, alert: "Empty content is not allowed!"
+	else
+		redirect_to @image, alert: "You've voted! Add new candidate is not allowed"
+		
 	end
 	
 end
@@ -70,7 +71,7 @@ def reset
 			redirect_to @image, alert:"Reset Failed!"
 		end
 	else 
-		redirect_to @image
+		redirect_to @image, alert: "Not even voted!"
 	end
 end
 
@@ -88,7 +89,8 @@ private
 	end
 
 	def set_vote
-		@vote = current_user.votes.find_by(image:@image)
+		@vote  = current_user.votes.find_by(image:@image)
+		@vote ||= Vote.new(image:@image, admin:current_user)
 	end
 
 	def candidate_params 
