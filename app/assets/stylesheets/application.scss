@@ -54,7 +54,8 @@ h1 {
 #alert {
   color: red;
 }
-.note{
+
+.note {
   text-align: center;
   font-style: italic;
 }
@@ -121,19 +122,13 @@ h1 {
 
 .context {
   overflow: hidden;
-  writing-mode: vertical-rl;
-  -ms-writing-mode: tb-rl;
-  height: 100%;
-  div{
-    width: 85px;
-    height: 85px;
-    overflow: hidden;
+  text-align: center;
+  .col{
     display: inline-block;
-    img {
-      margin: 3px;
-    }
   }
-
+  img {
+    margin: 3px;
+  }
 }
 
 .tab-content {
@@ -150,35 +145,53 @@ h1 {
   border-right: 1px solid #dddddd;
 }
 
-html, body, .border {
-  height: 100%;
+.reset {
+  float: right;
 }
 
-.container {
-  padding-top: 10px;
-}
-@media(max-width: 768px){
-  .user{
+@media(max-width: 768px) {
+  .user {
     width: 100%;
-    right:5px;
+    right: 5px;
+  }
+  .context .col{
+    width: 75px;
+    .ceil {
+      height: 75px;
+    }
   }
 }
+
 @media (min-width: 768px) {
   .user {
     width: 720px;
   }
+  .context .col{
+    width: 75px;
+    .ceil {
+      height: 75px;
+    }
+  }
 }
+
 @media (min-width: 992px) {
   .user {
     width: 940px;
   }
-  .context-div{
-    height:540px;
+  .context .col{
+    width: 75px;
+    .ceil {
+      height: 85px;
+    }
   }
-  .context{
-    padding: 0 40px;
+  .reset {
+    margin-right: 100px;
+  }
+  .show-right{
+    padding-top: 70px;
   }
 }
+
 @media (min-width: 1200px) {
   .user {
     width: 1140px;
@@ -189,7 +202,7 @@ html, body, .border {
   font-size: 1.7em;
   text-align: right;
   position: fixed;
-  top:0;
+  top: 0;
   background-color: #ffffff;
   padding-bottom: 5px;
   z-index: 2;
@@ -217,17 +230,13 @@ html, body, .border {
   }
 }
 
-.container{
+.container {
   padding-top: 80px;
 }
 
-.candidates{
-  td{
+.candidates {
+  td {
     padding: 3px;
   }
 }
 
-.reset{
-  float: right;
-  margin-right: 35px;
-}

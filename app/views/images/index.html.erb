@@ -9,7 +9,7 @@
   <div class="clearfix"></div>
 </div>
 <div class="row">
-  <% for i in (@images[6].nil? ? [0] : [0, 6]) do %>
+  <% for i in (@images.length>6 ? [0, 6] : [0]) do %>
       <div class="col-md-6">
         <table class="table table-striped font-mid" style="border-bottom: 3px solid #eeeeee">
           <thead>

@@ -1,19 +1,22 @@
 <h1>Show Image</h1>
 <div class="row">
-  <div class="col-xs-12 col-md-6 context-div">
-    <div class="center" style="height: 100px"><%= image_tag(@image.url, :border => 0, :width => 100) %></div>
+  <div class="col-xs-12 col-md-6">
+    <div class="center" style="height: 100px"><%= image_tag @image.url, :border => 0, :width => 100 %></div>
     <hr>
-
     <div class="context">
+      &nbsp;
+    </div>
+    &nbsp;
+    <div style="display: none" id="context-init">
       <% @image.get_context.each_with_index do |img, key| %>
-          <div>
-            <%= image_tag img.url, :border => 0, :class => img.id==@image.id ? 'current-pic' : '' %>
+          <div class="ceil">
+            <%= image_tag img.url, :border => 0,
+                          :class => img.id==@image.id ? 'current-pic img-responsive' : 'img-responsive' %>
           </div>
       <% end %>
     </div>
-    &nbsp;
   </div>
-  <div class="col-xs-12 col-md-6" style="padding-top:70px">
+  <div class="col-xs-12 col-md-6 show-right">
     <table class="table table-striped">
       <%= render @image.candidates.order("candidates.votesum DESC") %>
       <tr>
@@ -44,6 +47,27 @@
     </p>
   </div>
 </div>
-
-
-
+<script language="javascript">
+  $(function () {
+    var sum = $("#context-init div").length;
+    var cur = <%=@image.id%>;
+    var col, npc;
+    if (document.body.clientWidth < 993) {
+      col = 4;
+      npc = Math.ceil(sum / col);
+    } else {
+      npc = 6;
+      col = Math.ceil(sum / npc);
+    }
+    for (var i = 0; i < col; i++) {
+      $(".context").append("<div class='col' style='height: " +
+          npc * (document.body.clientWidth < 993 ? 75 : 85) + "px;'></div>");
+    }
+    var j = 0;
+    $("#context-init div").each(function () {
+      $(this).appendTo($(".context").children()[col - 1 - parseInt(j / npc)]);
+      j++;
+    })
+    alert(document.getElementById('a2').offsetTop)
+  });
+</script>
