@@ -1,22 +1,29 @@
 <h1>Listing Results</h1>
+<div class="row">
+  <% for i in (@results[6].nil? ? [0] : [0, 6]) do %>
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <thead class="font-mid">
+          <tr>
+            <th>Character</th>
+            <th>Result</th>
+          </tr>
+          </thead>
 
-<table class="table table-striped">
-  <thead class="font-mid">
-    <tr>
-      <th>Character</th>
-      <th>Result</th>
-    </tr>
-  </thead>
+          <tbody>
+          <% @results[i...i+6].each do |img| %>
+              <tr style="height: 90px">
+                <td><%= image_tag(img.url, :border => 0) %></td>
+                <td class="font-big"><%= img.result.content %></td>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+  <% end %>
+</div>
 
-  <tbody>
-    <% @results.each do |img| %>
-      <tr>
-        <td><%= image_tag(img.url, :border => 0) %></td>
-        <td class="font-big"><%= img.result.content %></td>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
-<%= will_paginate @results %>
+<div class="paginate">
+  <%= will_paginate @results %>
+</div>
 <div class="font-mid"><%= link_to 'Back', images_path %> </div>

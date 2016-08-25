@@ -15,7 +15,6 @@
  */
 @import "bootstrap";
 
-
 .content {
   position: relative;
   align: center;
@@ -49,11 +48,15 @@ h1 {
 }
 
 #notice {
-  color: green;
+  color: #BBBBBB;
 }
 
 #alert {
   color: red;
+}
+.note{
+  text-align: center;
+  font-style: italic;
 }
 
 .field {
@@ -94,25 +97,18 @@ h1 {
   text-align: right
 }
 
-.selected {
-  outline: #ED0036 2px solid;
-  *border: #ED0036 2px solid;
-  *margin: -2px;
-  background: image-url('check.gif') no-repeat bottom right;
-}
-
-.current {
+.current-pic {
   outline: #ED0036 2px solid;
   *border: #ED0036 2px solid;
   *margin: -2px;
 }
 
 .font-big {
-  font-size: 2em;
+  font-size: 1.7em;
   font-family: 楷体;
 }
 
-.font-mid{
+.font-mid {
   font-size: 1.7em;
 }
 
@@ -125,12 +121,19 @@ h1 {
 
 .context {
   overflow: hidden;
-  .col{
-    float: right; width: 30%;
-    div{
-      width: 90px;height: 90px;margin: 3px
+  writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  height: 100%;
+  div{
+    width: 85px;
+    height: 85px;
+    overflow: hidden;
+    display: inline-block;
+    img {
+      margin: 3px;
     }
   }
+
 }
 
 .tab-content {
@@ -150,14 +153,81 @@ h1 {
 html, body, .border {
   height: 100%;
 }
-.container{
+
+.container {
   padding-top: 10px;
 }
+@media(max-width: 768px){
+  .user{
+    width: 100%;
+    right:5px;
+  }
+}
+@media (min-width: 768px) {
+  .user {
+    width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .user {
+    width: 940px;
+  }
+  .context-div{
+    height:540px;
+  }
+  .context{
+    padding: 0 40px;
+  }
+}
+@media (min-width: 1200px) {
+  .user {
+    width: 1140px;
+  }
+}
 
-.user{
+.user {
   font-size: 1.7em;
   text-align: right;
-  p{
+  position: fixed;
+  top:0;
+  background-color: #ffffff;
+  padding-bottom: 5px;
+  z-index: 2;
+  p {
     margin-bottom: 0;
   }
+}
+
+.paginate {
+  text-align: center;
+  font-size: 1.5em;
+  .pagination {
+    border: 1px solid #eeeeee;
+    padding: 0;
+    margin: 0;
+    a, span, em {
+      padding: 0 10px;
+      border: 1px solid #eeeeee;
+      display: block;
+      float: left;
+    }
+    .current {
+      background-color: #F7F7F7;
+    }
+  }
+}
+
+.container{
+  padding-top: 80px;
+}
+
+.candidates{
+  td{
+    padding: 3px;
+  }
+}
+
+.reset{
+  float: right;
+  margin-right: 35px;
 }
