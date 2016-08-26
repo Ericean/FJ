@@ -19,15 +19,19 @@
           | <%= link_to "Logout", logout_path, method: :delete %>
         </p>
     <% end %>
+    <div class="note">
 
-    <% flash.each do |key, val| %>
-        <p id="<%= key %>"><%= val %></p>
-    <% end %>
+      <% flash.each do |key, val| %>
+          <p id="<%= key %>"><%= val %></p>
+      <% end %>
+
+    </div>
 
   </div>
   <div>
     <%= yield %>
   </div>
+  &nbsp;
 </div>
 </body>
 </html>

@@ -1,33 +1,46 @@
-<h1>Listing Images</h1>
-<div class="font-mid"><%= link_to 'Show Result', result_path %></div>
-<table class="table table-striped font-mid">
-  <thead>
-  <tr>
-    <th>Character</th>
-    <th>Status</th>
-    <th></th>
-  </tr>
-  </thead>
+<div>
+  <h1 style="float: left">Listing Images</h1>
+  <div class="font-mid" style="float: right; margin-top: 10px">
+    <%= link_to 'Show Result', result_path %>
+    <% if current_user.name === "admin" %>
+        | <%= link_to 'New Image', new_image_path %>
+    <% end %>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div class="row">
+  <% for i in (@images.length>6 ? [0, 6] : [0]) do %>
+      <div class="col-md-6">
+        <table class="table table-striped font-mid" style="border-bottom: 3px solid #eeeeee">
+          <thead>
+          <tr>
+            <th>Character</th>
+            <th width="150">Status</th>
+            <th></th>
+          </tr>
+          </thead>
 
-  <tbody>
-  <% @images.each do |image| %>
-      <tr style="height: 90px">
-        <td><%= image_tag(image.url, :border => 0) %></td>
-        <td><%= image.pinned? ? "Pinned" : (image.decided? ? "Decided" : "Undecided")%></td>
-        <td>
-          <%= link_to 'Show', image %>&nbsp;
-          <% if current_user.name === "admin" %>
-              <%= link_to 'Edit', edit_image_path(image) %>&nbsp;
-              <%= link_to 'Destroy', image, method: :delete, data: {confirm: 'Are you sure?'} %>
+          <tbody>
+
+          <% @images[i...i+6].each do |image| %>
+              <tr style="height: 90px">
+                <td><%= image_tag(image.url, :border => 0) %></td>
+                <td><%= image.pinned? ? "Pinned" : (image.decided? ? "Decided" : "Undecided") %></td>
+                <td>
+                  <%= link_to 'Show', image %>&nbsp;
+                  <% if current_user.name === "admin" %>
+                      <%= link_to 'Edit', edit_image_path(image) %>&nbsp;
+                      <%= link_to 'Destroy', image, method: :delete, data: {confirm: 'Are you sure?'} %>
+                  <% end %>
+                </td>
+              </tr>
           <% end %>
-        </td>
-      </tr>
+          </tbody>
+        </table>
+      </div>
   <% end %>
-  </tbody>
-</table>
+</div>
+<div class="paginate">
+  <%= will_paginate @images %>
+</div>
 
-<br>
-<%= will_paginate @images %>
-<% if current_user.name === "admin" %>
-    <div class="font-mid"><%= link_to 'New Image', new_image_path %></div>
-<% end %>

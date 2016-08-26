@@ -4,11 +4,11 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all.paginate(page:params[:page], per_page: 10)
+    @images = Image.all.paginate(page:params[:page], per_page: 12)
   end
 
   def result
-    @results = Image.where("flag >= ?", Image::DECIDED).paginate(page:params[:page], per_page: 10)
+    @results = Image.where("flag >= ?", Image::DECIDED).paginate(page:params[:page], per_page: 12)
   end 
   # GET /images/1
   # GET /images/1.json

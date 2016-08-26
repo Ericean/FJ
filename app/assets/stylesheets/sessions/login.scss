@@ -186,20 +186,20 @@ h3 {
 }
 
 .form-bottom {
-  padding: 25px 25px 30px 25px;
+  padding: 50px 20px;
   background: #eee;
   -moz-border-radius: 0 0 4px 4px;
   -webkit-border-radius: 0 0 4px 4px;
   border-radius: 0 0 4px 4px;
-  text-align: left;
+  text-align: center;
 }
 
 .form-bottom form textarea {
   height: 100px;
 }
 
-.form-bottom form button.btn {
-  width: 100%;
+.form-bottom form button.btn,input {
+  width: 70%;
 }
 
 @media (max-width: 415px) {
@@ -295,5 +295,5 @@ button.btn:active:focus, button.btn.active:focus {
 }
 
 .form-group {
-  padding: 10px 0;
+  padding: 20px 0;
 }
