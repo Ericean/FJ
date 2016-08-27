@@ -1,0 +1,10 @@
+features:
+	
+	* History
+	
+		> where you left since last session
+		> notification from admins, especially pin/unpin action
+		> Working process
+	
+	* Customized Search Engine
+		> In-app search
